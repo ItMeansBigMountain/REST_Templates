@@ -207,7 +207,7 @@ def update_users(pk):
 
 
 @app.route('/users', methods=['POST'])
-def update_record():
+def create_user():
     record = json.loads(request.data)
     
     entry = User(name=record.get("name") , email=record.get("email"))
@@ -220,7 +220,7 @@ def update_record():
 
 
 @app.route('/users/<pk>', methods=['DELETE'])
-def delete_record(pk):
+def delete_user(pk):
     data = User.query.get(pk)
     db.session.delete(data)
     db.session.commit()
