@@ -178,7 +178,6 @@ def query_user(pk):
 
 
 
-
 @app.route('/users/<pk>', methods=['PUT'])
 def update_users(pk):
 
@@ -206,6 +205,8 @@ def update_users(pk):
 
 
 
+
+
 @app.route('/users', methods=['POST'])
 def create_user():
     record = json.loads(request.data)
@@ -215,6 +216,12 @@ def create_user():
     db.session.commit()
 
     return jsonify(record)
+
+
+
+
+
+
 
     
 
@@ -228,51 +235,6 @@ def delete_user(pk):
     return jsonify({"deleted_id":pk})
 
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @app.route('/', methods=['DELETE'])
-# def delte_record():
-#     record = json.loads(request.data)
-#     new_records = []
-#     with open('/tmp/data.txt', 'r') as f:
-#         data = f.read()
-#         records = json.loads(data)
-#         for r in records:
-#             if r['name'] == record['name']:
-#                 continue
-#             new_records.append(r)
-#     with open('/tmp/data.txt', 'w') as f:
-#         f.write(json.dumps(new_records, indent=2))
-#     return jsonify(record)
-
-
-
-
-
-
-
 
 
 
