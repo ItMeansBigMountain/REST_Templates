@@ -2,33 +2,37 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
-	"rest_template/pkg/mocks"
+	"rest_template/pkg/models"
 	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
-func DeleteBook(w http.ResponseWriter, req *http.Request) {
+func (h handler) DeleteBook(w http.ResponseWriter, req *http.Request) {
 
 	// read dynamic url parameter
 	req_variables := mux.Vars(req)
 	id, _ := strconv.Atoi(req_variables["id"])
 
-	// search database
-	for i := 0; i < len(mocks.Books); i++ {
-		var book = mocks.Books[i]
-		// if book was found
-		if book.Id == id {
-			// Delete book
-			mocks.Books = append(mocks.Books[:i], mocks.Books[i+1:]...)
+	// model datatype of queried item
+	var book models.Book
 
-			// return output VALID
-			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(book)
-			return
-		}
+	// SEARCH QUERY DATABASE with id
+	result := h.DB.First(&book, id)
+
+	// ERROR DETECTION
+	if result.Error != nil {
+		fmt.Println(result.Error)
 	}
+
+	// delete object that matches book struct
+	h.DB.Delete(&book)
+
+	// return output VALID
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(book)
 
 }
