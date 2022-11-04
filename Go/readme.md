@@ -8,7 +8,8 @@
 # ADD REMOTE MODULE AS DEPENDENCY
     go get GIT_URL
 
-    ex: go get https://github.com/gorilla/mux.git
+    EXAMPLE: 
+        go get https://github.com/gorilla/mux.git
 
 
 
@@ -18,7 +19,7 @@
     db, SQL_err := sql.Open("DATABASE_ENGINE", "username:password@tcp(127.0.0.1:3306)/SCHEMA")
     
     EXAMPLE:
-        db, SQL_err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/demo")
+        db, SQL_err := sql.Open("mysql", "root:123never@tcp(127.0.0.1:3306)/demo")
 
 
 
@@ -28,8 +29,8 @@
 
 
 # DOWNLOAD ORM DEPENDENCIES
-        go get -u gorm.io/gorm
-        go get -u gorm.io/driver/mysql
+        - go get -u gorm.io/gorm
+        - go get -u gorm.io/driver/mysql
 
 
 # DOCUMENTATION FOR mysql
@@ -55,7 +56,7 @@
 
 
 # DEPENDENCY INJECTION
-    - we cannot keep recreating a variable (like the db connection) every time a file is referenced (endpoint handler)
+    we cannot keep recreating a variable (like the db connection) every time a file is referenced (endpoint handler)
         therefore we use DEPENDENCY INJECTION
 
     - create a handler struct
