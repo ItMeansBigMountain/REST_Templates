@@ -18,9 +18,9 @@ import requests
 #     pprint.pprint(  r.json() )
 
 
-url = 'http://localhost:4000/books/81'
-r = requests.delete(url)
-print(  r.json() )
+# url = 'http://localhost:4000/books/6'
+# r = requests.delete(url)
+# print(  r.json() )
 
 
 
@@ -31,16 +31,17 @@ print(  r.json() )
 
 
 # # POST
-# url = 'http://localhost:4000/books'
+url = 'http://localhost:4000/books'
 
-# myobj = {
-# 		"Title":  "sit Down",
-# 		"Author": "life",
-# 		"Desc":   "do things especially when you dont feel like it",
-# 	}
+myobj = {
+		"Title":  "sit Down",
+		"Author": "life",
+		# "Desc":   "do things especially when you dont feel like it",
+		"Desc":   "no legend was made without struggle",
+	}
 
-# r = requests.post(url, json = myobj)
-# print(r)
+r = requests.post(url, json = myobj)
+print(r)
 
 
 
@@ -53,7 +54,7 @@ print(  r.json() )
 # 		"Author": "effort",
 # 		"Desc":   "just because youre busy doesnt mean youre productive",
 # 	}
-# url = 'http://localhost:4000/books/81'
+# url = 'http://localhost:4000/books/4'
 # r = requests.put(url=url, json = myobj)
 # print(r.text)
 
