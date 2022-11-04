@@ -1,0 +1,20 @@
+
+INITIALIZE MODULE IN GO
+    go mod init PROJECT_NAME
+
+
+
+
+ADD REMOTE MODULE AS DEPENDENCY
+    go get GIT_URL
+
+    ex: go get https://github.com/gorilla/mux.git
+
+
+
+
+SQL LIBRARY DEPENDENCY
+    db, SQL_err := sql.Open("DATABASE_ENGINE", "username:password@tcp(127.0.0.1:3306)/SCHEMA")
+    
+    EXAMPLE:
+        db, SQL_err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/demo")
