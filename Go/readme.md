@@ -1,11 +1,11 @@
 
-INITIALIZE MODULE IN GO
-    go mod init PROJECT_NAME
+# INITIALIZE MODULE IN GO
+-    go mod init PROJECT_NAME
 
 
 
 
-ADD REMOTE MODULE AS DEPENDENCY
+# ADD REMOTE MODULE AS DEPENDENCY
     go get GIT_URL
 
     ex: go get https://github.com/gorilla/mux.git
@@ -14,7 +14,7 @@ ADD REMOTE MODULE AS DEPENDENCY
 
 
 
-SQL LIBRARY DEPENDENCY
+# SQL LIBRARY DEPENDENCY
     db, SQL_err := sql.Open("DATABASE_ENGINE", "username:password@tcp(127.0.0.1:3306)/SCHEMA")
     
     EXAMPLE:
@@ -22,17 +22,17 @@ SQL LIBRARY DEPENDENCY
 
 
 
-GO [ORM] 
+# GO [ORM] 
     Object-Relational Mapping (ORM) is a technique that lets you query and manipulate data from a database using an object-oriented paradigm.
 
 
 
-    DOWNLOAD DEPENDENCY
+- DOWNLOAD DEPENDENCY
         go get -u gorm.io/gorm
         go get -u gorm.io/driver/mysql
 
 
-    DOCUMENTATION FOR mysql
+- DOCUMENTATION FOR mysql
         https://gorm.io/docs/connecting_to_the_database.html
 
 
@@ -40,7 +40,7 @@ GO [ORM]
 
 
 
-POINTERS AND DEREFRENCE OPERATORS (& and *) 
+# POINTERS AND DEREFRENCE OPERATORS (& and *) 
 
     & - when placed in front of a variable, 
         this is talking about the memory location (pointer)
@@ -54,18 +54,18 @@ POINTERS AND DEREFRENCE OPERATORS (& and *)
 
 
 
-DEPENDENCY INJECTION
-    we cannot keep recreating a variable (like the db connection) every time a file is referenced (endpoint handler)
+# DEPENDENCY INJECTION
+- we cannot keep recreating a variable (like the db connection) every time a file is referenced (endpoint handler)
 
-        therefore we use DEPENDENCY INJECTION
+- therefore we use DEPENDENCY INJECTION
 
-        - create a handler struct
+- create a handler struct
 
-        - extend functions with handler struct (look at AddBook.go for reference)
+- extend functions with handler struct (look at AddBook.go for reference)
 
 
-        - on main.go , init the database object, then pass into handler struct that you also init
+- on main.go , init the database object, then pass into handler struct that you also init
 
-        - change route function calls into handler_struct's child function extention 
+- change route function calls into handler_struct's child function extention 
 
 
