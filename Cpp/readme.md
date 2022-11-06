@@ -6,16 +6,34 @@
 - make sure to add path to libraries you wish to include
 
 
-# NEED TO RUN ON UBUNTU
+
+# mySQL Connector Includes in main.cpp
+- have mysql cli installed
+
+- have mysql.h in the includes
+    - apt-get install libmysqlclient-dev 
+    - verify that you have ---> /usr/include/mysql
+
+- now you may add to the includes in main.cpp
+
+run app using
+    - g++ main.cpp -o output -L/usr/include/mysql/mysql -lmysqlclient && ./output
+
+
+
+
+
+
+
+
+# INIT CONTAINER ON UBUNTU
 - spin up docker container that runs mongoDB
 - write "docker-compose up"
 
 
 
 
-
-
-# Run Project
+# Run Project (no docker)
 - write: "make run"
 
 

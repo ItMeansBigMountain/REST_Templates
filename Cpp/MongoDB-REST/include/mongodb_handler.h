@@ -15,7 +15,6 @@
 
 namespace learning
 {
-
     constexpr char kMongoDB_uri[] = "mongodb://172.64.0.1:27017";
     constexpr char kMongoDB_database_name[] = "learning_mongocxx";
     constexpr char kMongoDB_collection_name[] = "GameCharacters";
@@ -30,9 +29,9 @@ namespace learning
                            db(client[kMongoDB_database_name]) {}
 
         // METHODS
-        bool AddPlayerToDb(
-            const std::string &CharacterName, const std::string &Size, const int16_t &wins)
+        bool AddPlayerToDb(const std::string &CharacterName, const std::string &Size, const int16_t &wins)
         {
+
             mongocxx::collection collection = db[kMongoDB_collection_name];
             auto builder = bsoncxx::builder::stream::document{};
 
@@ -42,6 +41,9 @@ namespace learning
                         << "wins" << wins << bsoncxx::builder::stream::finalize;
 
             collection.insert_one(doc_to_add.view());
+
+            std::string rawResult = bsoncxx::to_json(doc_to_add.view());
+            // std::cout << doc_to_add.view()  << std::endl;
 
             return true;
         }
