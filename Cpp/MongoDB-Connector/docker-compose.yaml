@@ -1,0 +1,29 @@
+version: '2'
+services:
+  cpp:
+    container_name: cpp
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    links:
+      - mongodb
+    restart: "always"
+    networks:
+      - learning-local
+  
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    volumes:
+      - "/data/db:/data/db"
+    networks:
+      learning-local:
+        ipv4_address: 172.64.0.1
+
+networks:
+  learning-local:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.64.0.0/24
+          gateway: 172.64.0.254
