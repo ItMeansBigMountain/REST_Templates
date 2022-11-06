@@ -7,6 +7,14 @@
 
 
 
+
+
+
+
+
+
+
+
 # mySQL Connector Includes in main.cpp
 - have mysql cli installed
 
@@ -16,8 +24,18 @@
 
 - now you may add to the includes in main.cpp
 
-run app using
+- run app using
     - g++ main.cpp -o output -L/usr/include/mysql/mysql -lmysqlclient && ./output
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -31,12 +49,8 @@ run app using
 - write "docker-compose up"
 
 
-
-
 # Run Project (no docker)
 - write: "make run"
-
-
 
 
 # setup-mongocss.sh
