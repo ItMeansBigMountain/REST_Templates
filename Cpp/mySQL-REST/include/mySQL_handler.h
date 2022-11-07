@@ -4,15 +4,13 @@
 #include <iostream>
 #include <cstdint>
 #include <string>
+#include <stdio.h>
 
 // DATABASE CONNECTORS
 #include <mysql/mysql.h>
 
 namespace learning
 {
-    // constexpr char kMongoDB_uri[] = "mongodb://172.64.0.1:27017";
-    // constexpr char kMongoDB_database_name[] = "learning_mongocxx";
-    // constexpr char kMongoDB_collection_name[] = "GameCharacters";
 
     class mySQL_handler
     {
@@ -40,6 +38,14 @@ namespace learning
 
             // build connection with db
             con = mySQL_connection_setup(db_details);
+
+            // Ensure application's table exists
+            mysql_execute_query(con, "CREATE TABLE IF NOT EXISTS GameCharacters ("
+                                     "id INT auto_increment,"
+                                     "character_name VARCHAR(255),"
+                                     "size VARCHAR(255),"
+                                     "wins INT,"
+                                     "primary key(id)) ");
         }
 
         mySQL_handler(const std::string &server, const std::string user, const std::string password, const std::string database)
@@ -53,6 +59,14 @@ namespace learning
 
             // build connection with db
             con = mySQL_connection_setup(db_details);
+
+            // Ensure application's table exists
+            mysql_execute_query(con, "CREATE TABLE IF NOT EXISTS GameCharacters ("
+                                     "id INT auto_increment,"
+                                     "character_name VARCHAR(255),"
+                                     "size VARCHAR(255),"
+                                     "wins INT,"
+                                     "primary key(id)) ");
         }
 
         // DATABASE METHODS
@@ -84,16 +98,17 @@ namespace learning
         }
 
         // CRUD METHODS
+        // MYSQL_RES *AddPlayerToDb(const std::string &CharacterName, const learning::CharacterSize &Size, const int16_t &wins)
         MYSQL_RES *AddPlayerToDb(const std::string &CharacterName, const std::string &Size, const int16_t &wins)
         {
             mysql_free_result(result);
 
             // query database
-            result = mysql_execute_query(con, "select * from books");
+            result = mysql_execute_query(con, "INSERT INTO GameCharacters (character_name,size,wins) VALUES ('peach', 'Medium', 0)");
             return result;
         }
 
-        MYSQL_RES *UpdatePlayerWins(const std::string &CharacterID)
+        MYSQL_RES *UpdatePlayer(const std::string &CharacterID)
         {
             mysql_free_result(result);
 
@@ -108,6 +123,15 @@ namespace learning
 
             // query database
             result = mysql_execute_query(con, "select * from books");
+            return result;
+        }
+
+        MYSQL_RES *GetPlayers()
+        {
+            mysql_free_result(result);
+
+            // query database
+            result = mysql_execute_query(con, "select * from GameCharacters");
             return result;
         }
 

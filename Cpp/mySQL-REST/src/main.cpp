@@ -8,8 +8,18 @@ int main()
 {
     learning::mySQL_handler h;
 
-    // mhandler.AddPlayerToDb( "Donkey Kong" , learning::CharacterSize::kLarge  , 0  );
+    // ADD PLAYERS
+    // h.AddPlayerToDb("Donkey Kong", learning::CharacterSize::kLarge, 0);
     h.AddPlayerToDb("Donkey Kong", "Large", 0);
+
+    // RETRIEVE PLAYERS
+    h.GetPlayers();
+
+    // UPDATE PLAYERS
+    // h.UpdatePlayer()
+
+    // DELETE PLAYERS
+    // h.DeletePlayer()
 
     // DISPLAY OUTPUT
     std::cout << "QUERY OUTPUT: " << std::endl;
