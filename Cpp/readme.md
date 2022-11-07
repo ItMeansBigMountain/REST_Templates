@@ -43,7 +43,6 @@
 
 
 
-
 # INIT CONTAINER ON UBUNTU
 - spin up docker container that runs mongoDB
 - write "docker-compose up"
@@ -59,3 +58,8 @@
 
 
 
+# MAKEFILE
+- allows variables to be passed into "g++ run command" to simplify execution
+    - make all
+    - make run
+    - make clean
