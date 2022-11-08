@@ -13,10 +13,10 @@ int main()
     // h.AddPlayerToDb("Ghost", "small", 5);
 
     // UPDATE PLAYERS
-    h.UpdatePlayer("luigi", "medium", 0, 5 );
+    // h.UpdatePlayer("luigi", "medium", 0, 5 );
 
     // DELETE PLAYERS
-    // h.DeletePlayer()
+    h.DeletePlayer(6);
 
     // RETRIEVE PLAYERS
     h.GetPlayers();

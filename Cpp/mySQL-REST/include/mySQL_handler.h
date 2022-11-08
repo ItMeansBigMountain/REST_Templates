@@ -136,12 +136,13 @@ namespace learning
             return result;
         }
 
-        MYSQL_RES *DeletePlayer(const std::string &CharacterID)
+        MYSQL_RES *DeletePlayer(const int16_t &CharacterID)
         {
+            std::string q = "DELETE FROM GameCharacters WHERE id=" + std::to_string(CharacterID);
             mysql_free_result(result);
 
             // query database
-            result = mysql_execute_query(con, "select * from books");
+            result = mysql_execute_query(con, q.c_str());
             return result;
         }
 
