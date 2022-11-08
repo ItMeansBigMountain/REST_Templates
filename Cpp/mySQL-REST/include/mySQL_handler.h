@@ -103,8 +103,17 @@ namespace learning
         {
             mysql_free_result(result);
 
-            // query database
-            result = mysql_execute_query(con, "INSERT INTO GameCharacters (character_name,size,wins) VALUES ('peach', 'Medium', 0)");
+            // build query string
+            std::string q = "INSERT INTO GameCharacters (character_name,size,wins) VALUES ('";
+            q += CharacterName;
+            q += "', '";
+            q += Size;
+            q += "', ";
+            q += std::to_string(wins);
+            q += ")";
+
+            // execute database query
+            result = mysql_execute_query(con, q.c_str() );
             return result;
         }
 

@@ -10,7 +10,7 @@ int main()
 
     // ADD PLAYERS
     // h.AddPlayerToDb("Donkey Kong", learning::CharacterSize::kLarge, 0);
-    h.AddPlayerToDb("Donkey Kong", "Large", 0);
+    h.AddPlayerToDb("Ghost", "small", 5);
 
     // RETRIEVE PLAYERS
     h.GetPlayers();
