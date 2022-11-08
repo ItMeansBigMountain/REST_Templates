@@ -9,6 +9,9 @@
 // DATABASE CONNECTORS
 #include <mysql/mysql.h>
 
+// SERVER DEPENDENCIES
+#include "SimpleJSON/json.hpp"
+
 namespace learning
 {
 
@@ -146,13 +149,38 @@ namespace learning
             return result;
         }
 
-        MYSQL_RES *GetPlayers()
+        MYSQL_RES *QueryPlayers()
         {
             mysql_free_result(result);
 
             // query database
             result = mysql_execute_query(con, "select * from GameCharacters");
             return result;
+        }
+
+        // JSON OUTPUT METHODS
+        json::JSON getAllPlayers()
+        {
+            QueryPlayers();
+
+            // init json objects
+            json::JSON output_arr;
+            json::JSON playerObj;
+            output_arr["Players"] = json::Array();
+
+            // parse through sql query
+            while ((row = mysql_fetch_row(result)) != NULL)
+            {
+                // JSON OBJECT DICT
+                playerObj = {
+                    "id" , row[0],
+                    "character_name" , row[1],
+                    "size" , row[2],
+                    "wins" , row[3],
+                };
+                output_arr["Players"].append(playerObj);
+            }
+            return output_arr;
         }
 
     private:

@@ -1,8 +1,14 @@
-#include <iostream>
+// IGNORE WARNINGS
+// #pragma warning (disable : 4820 4619 4668)
 
-// APPLICATION HELPERS
+
+// APPLICATION DEPENDENCIES
+#include <iostream>
 #include "mySQL_handler.h"
 #include "Character_Size.h"
+
+
+
 
 int main()
 {
@@ -16,15 +22,19 @@ int main()
     // h.UpdatePlayer("luigi", "medium", 0, 5 );
 
     // DELETE PLAYERS
-    h.DeletePlayer(6);
+    // h.DeletePlayer(6);
 
     // RETRIEVE PLAYERS
-    h.GetPlayers();
+    // h.QueryPlayers();
 
     // DISPLAY OUTPUT
-    std::cout << "QUERY OUTPUT: " << std::endl;
-    while ((h.row = mysql_fetch_row(h.result)) != NULL)
-    {
-        std::cout << h.row[0] << " | " << h.row[1] << " | " << h.row[2] << " | " << h.row[3] << " | " << std::endl;
-    }
+    // std::cout << "QUERY OUTPUT: " << std::endl;
+    // while ((h.row = mysql_fetch_row(h.result)) != NULL)
+    // {
+    //     std::cout << h.row[0] << " | " << h.row[1] << " | " << h.row[2] << " | " << h.row[3] << " | " << std::endl;
+    // }
+
+
+    // JSON TESTING
+    std::cout << h.getAllPlayers()["Players"] << std::endl;
 }

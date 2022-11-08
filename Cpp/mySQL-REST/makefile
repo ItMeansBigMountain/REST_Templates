@@ -1,6 +1,6 @@
 CXX := g++
 CXX_FLAGS := -Wall -Wextra -std=c++17 -ggdb
-INCLUDE	:= -Iinclude
+INCLUDE	:= -Iinclude -Ilib
 
 
 BIN := bin
