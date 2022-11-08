@@ -10,16 +10,16 @@ int main()
 
     // ADD PLAYERS
     // h.AddPlayerToDb("Donkey Kong", learning::CharacterSize::kLarge, 0);
-    h.AddPlayerToDb("Ghost", "small", 5);
-
-    // RETRIEVE PLAYERS
-    h.GetPlayers();
+    // h.AddPlayerToDb("Ghost", "small", 5);
 
     // UPDATE PLAYERS
-    // h.UpdatePlayer()
+    h.UpdatePlayer("luigi", "medium", 0, 5 );
 
     // DELETE PLAYERS
     // h.DeletePlayer()
+
+    // RETRIEVE PLAYERS
+    h.GetPlayers();
 
     // DISPLAY OUTPUT
     std::cout << "QUERY OUTPUT: " << std::endl;

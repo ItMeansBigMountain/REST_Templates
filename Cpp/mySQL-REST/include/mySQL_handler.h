@@ -113,16 +113,26 @@ namespace learning
             q += ")";
 
             // execute database query
-            result = mysql_execute_query(con, q.c_str() );
+            result = mysql_execute_query(con, q.c_str());
             return result;
         }
 
-        MYSQL_RES *UpdatePlayer(const std::string &CharacterID)
+        MYSQL_RES *UpdatePlayer(const std::string &CharacterName, const std::string &Size, const int16_t &wins, const int16_t &CharacterID)
         {
             mysql_free_result(result);
 
+            // build query string
+            std::string q = "UPDATE GameCharacters SET character_name='";
+            q += CharacterName;
+            q += "', size='";
+            q += Size;
+            q += "', wins=";
+            q += std::to_string(wins);
+            q += " WHERE id=";
+            q += std::to_string(CharacterID);
+
             // query database
-            result = mysql_execute_query(con, "select * from books");
+            result = mysql_execute_query(con, q.c_str());
             return result;
         }
 
