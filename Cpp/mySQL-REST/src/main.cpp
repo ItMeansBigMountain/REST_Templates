@@ -9,6 +9,10 @@
 
 
 
+// HTTP SERVER DEPENDENCIES
+#include "served/multiplexer.hpp"
+#include "http_server.h"
+
 
 int main()
 {
@@ -36,5 +40,19 @@ int main()
 
 
     // JSON TESTING
-    std::cout << h.getAllPlayers()["Players"] << std::endl;
+    // std::cout << h.getAllPlayers()["Players"] << std::endl;
+
+
+
+    // SERVER DRIVER CODE
+    served::multiplexer multiplexer;
+    learning::HttpServer http_server(multiplexer);
+
+    http_server.initialize_endpoints();
+    http_server.start_server();
+
+
+
+
+
 }

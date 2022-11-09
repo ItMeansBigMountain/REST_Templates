@@ -72,6 +72,8 @@ namespace learning
                                      "primary key(id)) ");
         }
 
+
+
         // DATABASE METHODS
         MYSQL *mySQL_connection_setup(struct connection_details connection_details_param)
         {
@@ -94,11 +96,16 @@ namespace learning
             if (mysql_query(connection, sql_query))
             {
                 std::cout << "SQL QUERY ERROR: " << mysql_error(connection) << std::endl;
-                exit(1);
+                
+                // TODO: Error should return json message to url endpoint status code 
+                // exit(1);
             }
 
             return mysql_use_result(connection);
         }
+
+
+
 
         // CRUD METHODS
         // MYSQL_RES *AddPlayerToDb(const std::string &CharacterName, const learning::CharacterSize &Size, const int16_t &wins)
@@ -157,6 +164,10 @@ namespace learning
             result = mysql_execute_query(con, "select * from GameCharacters");
             return result;
         }
+
+
+
+
 
         // JSON OUTPUT METHODS
         json::JSON getAllPlayers()
