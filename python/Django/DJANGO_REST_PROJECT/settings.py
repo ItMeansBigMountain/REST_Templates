@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,24 +79,23 @@ WSGI_APPLICATION = 'DJANGO_REST_PROJECT.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 # https://docs.djangoproject.com/en/4.1/topics/db/multi-db/
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 
     # IMPORT EXISTING SQL DATABASE   --->    "python3 manage.py inspectdb > models.py"
     # https://www.youtube.com/watch?v=CkYvpKZyEqI&t=67s
 
-    # 'default': {
-    #    'NAME': 'app_data',
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'multi_schema_db',
-    #     'HOST': 'localhost',
-    #     'PORT': 3306,
-    #     'USER': 'USERNAME',
-    #     'PASSWORD': 'PASSWORD'
-    # }
+    'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'demo',
+        'HOST': 'localhost',
+        'PORT': 3306,
+        'USER': 'root',
+        'PASSWORD': '123never'
+    }
     
 }
 
