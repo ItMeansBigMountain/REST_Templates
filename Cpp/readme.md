@@ -33,6 +33,9 @@
 
 
 
+# setup-server.sh
+- bash script to set up "JSON" & "HTTP Server" Libraries in order to build REST App
+- may need to run setup as sudo or give permissions "chmod +x setup-server.sh"
 
 
 
@@ -63,3 +66,5 @@
     - make all
     - make run
     - make clean
+
+- Makefile acts like a compiler helper that will assist intellisense
