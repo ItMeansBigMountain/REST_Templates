@@ -7,6 +7,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.EntityFrameworkCore; // Add this for using SQLite
 using MyRestApi.Infrastructure;
 using MyRestApi.Features.UserAccounts.Data;
+using MyRestApi.Features.UserAccounts.Services;
 
 namespace MyRestApi
 {
@@ -45,6 +46,8 @@ namespace MyRestApi
             // REGISTER SERVICES AND REPOSITORIES
             services.AddScoped<IUserRepository, UserRepository>();
             // services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IPasswordService, PasswordService>();  // Register IPasswordService
+
 
             // ADD SWAGGER
             services.AddSwaggerGen();

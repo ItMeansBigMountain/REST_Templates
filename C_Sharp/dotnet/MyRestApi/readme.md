@@ -86,10 +86,16 @@ MyRestApi/
       }
     }
     ```
-6. Create migrations and update the database:
+6. Set up a local tool manifest and install `dotnet-ef`:
     ```bash
-    dotnet ef migrations add InitialCreate
-    dotnet ef database update
+    dotnet new tool-manifest
+    dotnet tool install dotnet-ef
+    ```
+
+7. Create migrations and update the database:
+    ```bash
+    dotnet tool run dotnet-ef migrations add InitialCreate
+    dotnet tool run dotnet-ef database update
     ```
 
 ## Implement Features
@@ -202,3 +208,8 @@ Services are used for sub-features within the feature that allow for operations 
 # Parameters:
 #   - {id}: The ID of the book.
 ```
+
+---
+<b>
+This guide provides a structured approach to building a REST API for managing user accounts and a books library in .NET using vertical slicing architecture. Follow each section step-by-step to set up and develop your API.
+</b>
