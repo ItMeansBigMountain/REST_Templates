@@ -4,10 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using MyLibraryApi.Data;
 using Microsoft.EntityFrameworkCore; // Add this for using SQLite
+using MyRestApi.Infrastructure;
+using MyRestApi.Features.UserAccounts.Data;
 
-namespace MyLibraryApi
+namespace MyRestApi
 {
     public class Startup
     {
@@ -43,7 +44,7 @@ namespace MyLibraryApi
 
             // REGISTER SERVICES AND REPOSITORIES
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBookRepository, BookRepository>();
+            // services.AddScoped<IBookRepository, BookRepository>();
 
             // ADD SWAGGER
             services.AddSwaggerGen();

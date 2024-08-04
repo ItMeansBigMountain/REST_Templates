@@ -28,7 +28,7 @@ Vertical slicing is an architectural approach that divides an application into v
 ### Project Structure
 
 ```plaintext
-MyLibraryApi/
+MyRestApi/
 ├── Features/
 │   ├── UserAccounts/
 │   │   ├── Controllers/
@@ -42,7 +42,8 @@ MyLibraryApi/
 │   │   ├── DTOs/
 │   │   ├── Models/
 │   │   ├── Services/
-├── Data/
+├── Infrastructure/
+│   ├── AppDbContext.cs
 ├── Startup.cs
 ├── Program.cs
 ├── appsettings.json
@@ -53,8 +54,8 @@ MyLibraryApi/
 1. Install .NET SDK from the [official .NET website](https://dotnet.microsoft.com/download).
 2. Create a new Web API project:
     ```bash
-    dotnet new webapi -n MyLibraryApi
-    cd MyLibraryApi
+    dotnet new webapi -n MyRestApi
+    cd MyRestApi
     dotnet run
     ```
 
@@ -74,7 +75,7 @@ MyLibraryApi/
     dotnet add package Microsoft.EntityFrameworkCore.Sqlite
     dotnet add package Microsoft.EntityFrameworkCore.Design
     ```
-3. Create a `Data` directory and add a database context class.
+3. Create a `Infrastructure` directory and add a database context class.
 4. Configure the database context in `Startup.cs`.
 5. Add connection strings in `appsettings.json`:
     ```json
@@ -95,19 +96,28 @@ MyLibraryApi/
 
 ### User Accounts Feature
 
-1. Define the `User` model in the `Models` directory.
-2. Create `UserDto` in the `DTOs` directory.
-3. Implement `IUserRepository` interface and `UserRepository` class in the `Data` directory.
-4. Create `UserAccountsController` in the `Controllers` directory.
-5. Implement `UserService` in the `Services` directory (if needed).
+1. **Define the `User` model** in the `Models` directory.
+2. **Create Input and Output DTOs** in the `DTOs` directory for password security:
+    - `UserInputDto` for receiving user data (including password).
+    - `UserOutputDto` for sending user data without sensitive information.
+3. **Implement `IUserRepository` interface and `UserRepository` class** in the `Data` directory.
+4. **Create `UserAccountsController`** in the `Controllers` directory.
+5. **Implement `PasswordService`** in the `Services` directory to handle password hashing and verification.
 
 ### Books Library Feature
 
-1. Define the `Book` model in the `Models` directory.
-2. Create `BookDto` in the `DTOs` directory.
-3. Implement `IBookRepository` interface and `BookRepository` class in the `Data` directory.
-4. Create `BooksLibraryController` in the `Controllers` directory.
-5. Implement `BookService` in the `Services` directory (if needed).
+1. **Define the `Book` model** in the `Models` directory.
+2. **Create `BookDto`** in the `DTOs` directory.
+3. **Implement `IBookRepository` interface and `BookRepository` class** in the `Data` directory.
+4. **Create `BooksLibraryController`** in the `Controllers` directory.
+5. **Implement `BookService`** in the `Services` directory.
+
+### Why Use Services?
+
+Services are used for sub-features within the feature that allow for operations like:
+- **Password Encryption**: Securely handling passwords.
+- **Email Notifications**: Sending notifications to users.
+- **File Uploads**: Managing file uploads and storage.
 
 ## Configure Swagger
 
@@ -127,7 +137,68 @@ MyLibraryApi/
 1. Configure the application for deployment.
 2. Choose a hosting environment (e.g., Azure, AWS, Docker).
 
----
+## API Endpoints
 
-This guide provides a structured approach to building a REST API for managing user accounts and a books library in .NET using vertical slicing architecture. Follow each section step-by-step to set up and develop your API.
+### UserAccounts Endpoints
+
+```python
+# Get All Users
+# Endpoint: GET /api/UserAccounts
+# Description: Retrieves a list of all users.
+
+# Get User By ID
+# Endpoint: GET /api/UserAccounts/{id}
+# Description: Retrieves a specific user by their ID.
+# Parameters:
+#   - {id}: The ID of the user.
+
+# Add New User
+# Endpoint: POST /api/UserAccounts
+# Description: Adds a new user.
+# Body: UserInputDto with user details.
+
+# Update User
+# Endpoint: PUT /api/UserAccounts/{id}
+# Description: Updates an existing user.
+# Parameters:
+#   - {id}: The ID of the user.
+# Body: UserInputDto with updated user details.
+
+# Delete User
+# Endpoint: DELETE /api/UserAccounts/{id}
+# Description: Deletes a user by their ID.
+# Parameters:
+#   - {id}: The ID of the user.
+```
+
+### BooksLibrary Endpoints
+
+```python
+# Get All Books
+# Endpoint: GET /api/BooksLibrary
+# Description: Retrieves a list of all books.
+
+# Get Book By ID
+# Endpoint: GET /api/BooksLibrary/{id}
+# Description: Retrieves a specific book by its ID.
+# Parameters:
+#   - {id}: The ID of the book.
+
+# Add New Book
+# Endpoint: POST /api/BooksLibrary
+# Description: Adds a new book.
+# Body: BookInputDto with book details.
+
+# Update Book
+# Endpoint: PUT /api/BooksLibrary/{id}
+# Description: Updates an existing book.
+# Parameters:
+#   - {id}: The ID of the book.
+# Body: BookInputDto with updated book details.
+
+# Delete Book
+# Endpoint: DELETE /api/BooksLibrary/{id}
+# Description: Deletes a book by its ID.
+# Parameters:
+#   - {id}: The ID of the book.
 ```
