@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyRestApi.Features.UserAccounts.Models;
-// using MyRestApi.Features.BooksLibrary.Models;
+using MyRestApi.Features.BooksLibrary.Models;
 
 namespace MyRestApi.Infrastructure
 {
@@ -12,7 +12,7 @@ namespace MyRestApi.Infrastructure
         }
 
         public DbSet<User> Users { get; set; }
-        // public DbSet<Book> Books { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

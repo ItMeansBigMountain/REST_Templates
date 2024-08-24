@@ -1,3 +1,5 @@
+using MyRestApi.Features.UserAccounts.Models;
+
 namespace MyRestApi.Features.BooksLibrary.Models
 {
     public class Book
@@ -19,6 +21,9 @@ namespace MyRestApi.Features.BooksLibrary.Models
 
         // Checked Out Status
         public required bool CheckedOut { get; set; }
+
+        // User Who Checked Out Book
+        public User CheckedOut_User { get; set; }
 
         // Release Date
         public DateTime ReleaseDate { get; set; }
