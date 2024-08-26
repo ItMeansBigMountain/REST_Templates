@@ -15,52 +15,60 @@
 
 // WE'RE USING AN INPUT AND OUTPUT DTO TO RETURN THE USER JSON DATA OF THE USER SAFELY
 
+using MyRestApi.Features.BooksLibrary.DTOs;
+
 namespace MyRestApi.Features.UserAccounts.DTOs
 {
-    // INPUT
+    // INPUT DTO
     public class UserInputDto
     {
         // User ID
         public int Id { get; set; }
 
         // User's First Name
-        public string FirstName { get; set; }
+        public required string  FirstName { get; set; }
 
         // User's Last Name
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
 
         // User's Password
-        public string Password { get; set; }
+        public required string Password { get; set; }
 
         // User's Email Address
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         // User's Role (e.g., Admin, Member)
-        public string Role { get; set; }
+        public required string Role { get; set; }
+
+        // Books User has checked out
+        public List<BookDto>? CheckedOutBooks { get; set; }
 
         // Date and Time the User Registered
-        public DateTime RegisteredAt { get; set; }
+        public required DateTime RegisteredAt { get; set; }
     }
 
-    // OUTPUT
+    // OUTPUT DTO
     public class UserOutputDto
     {
         // User ID
         public int Id { get; set; }
 
         // User's First Name
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
         // User's Last Name
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
 
         // User's Email Address
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         // User's Role (e.g., Admin, Member)
-        public string Role { get; set; }
+        public required string Role { get; set; }
+
+        // Books User has checked out
+        public List<BookDto>? CheckedOutBooks { get; set; }
 
         // Date and Time the User Registered
-        public DateTime RegisteredAt { get; set; }
+        public required DateTime RegisteredAt { get; set; }
     }
 }

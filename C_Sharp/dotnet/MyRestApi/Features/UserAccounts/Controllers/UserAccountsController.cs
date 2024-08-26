@@ -2,6 +2,8 @@ using MyRestApi.Features.UserAccounts.DTOs;
 using MyRestApi.Features.UserAccounts.Services;
 using MyRestApi.Features.UserAccounts.Data;
 using MyRestApi.Features.UserAccounts.Models;
+using MyRestApi.Features.BooksLibrary.DTOs;
+using MyRestApi.Features.BooksLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -30,6 +32,22 @@ namespace MyRestApi.Features.UserAccounts.Controllers
 
             foreach (var user in users)
             {
+                var checkedOutBookDtos = new List<BookDto>();
+                foreach (var book in user.CheckedOutBooks)
+                {
+                    checkedOutBookDtos.Add(new BookDto
+                    {
+                        ID = book.ID,
+                        Title = book.Title,
+                        Author = book.Author,
+                        Genre = book.Genre,
+                        Quantity = book.Quantity,
+                        CheckedOut = book.CheckedOut,
+                        ReleaseDate = book.ReleaseDate,
+                        DueDate = book.DueDate
+                    });
+                }
+
                 userDtos.Add(new UserOutputDto
                 {
                     Id = user.Id,
@@ -37,7 +55,8 @@ namespace MyRestApi.Features.UserAccounts.Controllers
                     LastName = user.LastName,
                     Email = user.Email,
                     Role = user.Role,
-                    RegisteredAt = user.RegisteredAt
+                    RegisteredAt = user.RegisteredAt,
+                    CheckedOutBooks = checkedOutBookDtos.ToList()
                 });
             }
 
@@ -55,6 +74,22 @@ namespace MyRestApi.Features.UserAccounts.Controllers
                 return NotFound();
             }
 
+            var checkedOutBookDtos = new List<BookDto>();
+            foreach (var book in user.CheckedOutBooks)
+            {
+                checkedOutBookDtos.Add(new BookDto
+                {
+                    ID = book.ID,
+                    Title = book.Title,
+                    Author = book.Author,
+                    Genre = book.Genre,
+                    Quantity = book.Quantity,
+                    CheckedOut = book.CheckedOut,
+                    ReleaseDate = book.ReleaseDate,
+                    DueDate = book.DueDate
+                });
+            }
+
             var userDto = new UserOutputDto
             {
                 Id = user.Id,
@@ -62,7 +97,8 @@ namespace MyRestApi.Features.UserAccounts.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Role = user.Role,
-                RegisteredAt = user.RegisteredAt
+                RegisteredAt = user.RegisteredAt,
+                CheckedOutBooks = checkedOutBookDtos.ToList() // Convert to array
             };
 
             return Ok(userDto);
@@ -80,14 +116,24 @@ namespace MyRestApi.Features.UserAccounts.Controllers
                 Email = userDto.Email,
                 Password = hashedPassword,
                 Role = userDto.Role,
+                CheckedOutBooks = new List<Book>(), // Initialize as empty list
                 RegisteredAt = userDto.RegisteredAt
             };
 
             await _userRepository.AddAsync(user);
 
-            userDto.Id = user.Id;
+            var addedUserDto = new UserOutputDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = user.Role,
+                RegisteredAt = user.RegisteredAt,
+                CheckedOutBooks = new List<BookDto> { }
+            };
 
-            return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
+            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, addedUserDto);
         }
 
         // PUT: api/UserAccounts/{id}
@@ -108,12 +154,39 @@ namespace MyRestApi.Features.UserAccounts.Controllers
             existingUser.Email = userDto.Email;
             existingUser.Password = hashedPassword;
             existingUser.Role = userDto.Role;
+
+            if (existingUser.CheckedOutBooks == null)
+            {
+                existingUser.CheckedOutBooks = new List<Book>();
+            }
+
+            if (userDto.CheckedOutBooks != null)
+            {
+                existingUser.CheckedOutBooks.Clear(); // Clear existing list
+                foreach (var bookDto in userDto.CheckedOutBooks)
+                {
+                    existingUser.CheckedOutBooks.Add(new Book
+                    {
+                        ID = bookDto.ID,
+                        Title = bookDto.Title,
+                        Author = bookDto.Author,
+                        Genre = bookDto.Genre,
+                        Quantity = bookDto.Quantity,
+                        CheckedOut = bookDto.CheckedOut,
+                        ReleaseDate = bookDto.ReleaseDate,
+                        DueDate = bookDto.DueDate,
+                        CheckedOutUserId = bookDto.CheckedOutUserId // Setting the User who checked out the book
+                    });
+                }
+            }
+
             existingUser.RegisteredAt = userDto.RegisteredAt;
 
             await _userRepository.UpdateAsync(existingUser);
 
             return NoContent();
         }
+
 
         // DELETE: api/UserAccounts/{id}
         [HttpDelete("{id}")]

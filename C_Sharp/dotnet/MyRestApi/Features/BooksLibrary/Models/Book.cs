@@ -5,7 +5,7 @@ namespace MyRestApi.Features.BooksLibrary.Models
     public class Book
     {
         // User ID (Primary Key)
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         // Book Title
         public required string Title { get; set; }
@@ -23,12 +23,12 @@ namespace MyRestApi.Features.BooksLibrary.Models
         public required bool CheckedOut { get; set; }
 
         // User Who Checked Out Book
-        public User CheckedOut_User { get; set; }
+        public User? CheckedOutUserId { get; set; }
 
         // Release Date
         public DateTime ReleaseDate { get; set; }
 
         // Due Date
-        public DateTime DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
     }
 }

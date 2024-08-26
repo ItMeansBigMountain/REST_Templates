@@ -9,12 +9,11 @@ namespace MyRestApi.Features.BooksLibrary.Controllers
     [ApiController]
     public class BooksLibraryController : ControllerBase
     {
-        // SERVICES IMPORT
-        private IBooksLibraryRepository _booksRepository;
+        private readonly IBooksLibraryRepository _booksRepository;
 
-        public BooksLibraryController(IBooksLibraryRepository bookRepository)
+        public BooksLibraryController(IBooksLibraryRepository booksRepository)
         {
-            _booksRepository = bookRepository;
+            _booksRepository = booksRepository;
         }
 
         // GET: api/BooksLibrary
@@ -22,29 +21,27 @@ namespace MyRestApi.Features.BooksLibrary.Controllers
         public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooks()
         {
             var books = await _booksRepository.GetAllAsync();
-            var bookDtos = new List<BookDto>();
-
-            foreach (var book in books)
+            var bookDtos = books.Select(book => new BookDto
             {
-                bookDtos.Add(new BookDto
-                {
-                    Title = book.Title,
-                    Author = book.Author,
-                    Genre = book.Genre,
-                    Quantity = book.Quantity,
-                    CheckedOut = book.CheckedOut,
-                    ReleaseDate = book.ReleaseDate,
-                    DueDate = book.DueDate
-                });
-            }
+                ID = book.ID,
+                Title = book.Title,
+                Author = book.Author,
+                Genre = book.Genre,
+                Quantity = book.Quantity,
+                CheckedOut = book.CheckedOut,
+                CheckedOutUserId = book.CheckedOutUserId, // Mapping the user who checked out the book
+                ReleaseDate = book.ReleaseDate,
+                DueDate = book.DueDate
+            }).ToList();
+
             return Ok(bookDtos);
         }
 
-        // GET: api/BooksLibrary/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<BookDto>> GetBookById(int id)
+        // GET: api/BooksLibrary/{ID}
+        [HttpGet("{ID}")]
+        public async Task<ActionResult<BookDto>> GetBookByID(int ID)
         {
-            var book = await _booksRepository.GetByIdAsync(id);
+            var book = await _booksRepository.GetByIdAsync(ID);
 
             if (book == null)
             {
@@ -53,11 +50,13 @@ namespace MyRestApi.Features.BooksLibrary.Controllers
 
             var bookDto = new BookDto
             {
+                ID = book.ID,
                 Title = book.Title,
                 Author = book.Author,
                 Genre = book.Genre,
                 Quantity = book.Quantity,
                 CheckedOut = book.CheckedOut,
+                CheckedOutUserId = book.CheckedOutUserId, // Mapping the user who checked out the book
                 ReleaseDate = book.ReleaseDate,
                 DueDate = book.DueDate
             };
@@ -75,23 +74,24 @@ namespace MyRestApi.Features.BooksLibrary.Controllers
                 Author = bookDto.Author,
                 Genre = bookDto.Genre,
                 Quantity = bookDto.Quantity,
-                CheckedOut = bookDto.CheckedOut,
+                CheckedOut = false, // New books should not be checked out
+                CheckedOutUserId = null, // No user should be associated with a new book
                 ReleaseDate = bookDto.ReleaseDate,
                 DueDate = bookDto.DueDate
             };
 
             await _booksRepository.AddAsync(book);
 
-            bookDto.Id = book.Id;
+            bookDto.ID = book.ID;
 
-            return CreatedAtAction(nameof(GetBookById), new { id = bookDto.Id }, bookDto);
+            return CreatedAtAction(nameof(GetBookByID), new { ID = bookDto.ID }, bookDto);
         }
 
-        // PUT: api/BooksLibrary/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, BookDto bookDto)
+        // PUT: api/BooksLibrary/{ID}
+        [HttpPut("{ID}")]
+        public async Task<IActionResult> UpdateBook(int ID, BookDto bookDto)
         {
-            var existingBook = await _booksRepository.GetByIdAsync(id);
+            var existingBook = await _booksRepository.GetByIdAsync(ID);
 
             if (existingBook == null)
             {
@@ -103,6 +103,7 @@ namespace MyRestApi.Features.BooksLibrary.Controllers
             existingBook.Genre = bookDto.Genre;
             existingBook.Quantity = bookDto.Quantity;
             existingBook.CheckedOut = bookDto.CheckedOut;
+            existingBook.CheckedOutUserId = bookDto.CheckedOutUserId; // Updating the user who checked out the book
             existingBook.ReleaseDate = bookDto.ReleaseDate;
             existingBook.DueDate = bookDto.DueDate;
 
@@ -111,18 +112,18 @@ namespace MyRestApi.Features.BooksLibrary.Controllers
             return NoContent();
         }
 
-        // DELETE: api/BooksLibrary/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
+        // DELETE: api/BooksLibrary/{ID}
+        [HttpDelete("{ID}")]
+        public async Task<IActionResult> DeleteBook(int ID)
         {
-            var book = await _booksRepository.GetByIdAsync(id);
+            var book = await _booksRepository.GetByIdAsync(ID);
 
             if (book == null)
             {
                 return NotFound();
             }
 
-            await _booksRepository.DeleteAsync(id);
+            await _booksRepository.DeleteAsync(ID);
 
             return NoContent();
         }
